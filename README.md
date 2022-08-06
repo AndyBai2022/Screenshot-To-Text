@@ -1,9 +1,12 @@
 # Screenshot-To-Text
 Convert the customized screenshot to text
-Windows Form Application.
+
+Windows Form Application coded with C#.
 
 
 .NET Framework 4.5
+
+
 
 1. Press F5 to run the application.
 2. Click Get Screenshhot.
