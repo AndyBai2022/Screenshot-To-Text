@@ -15,7 +15,7 @@ Windows Form Application coded with C#.
 3. Press the left mouse button and hold it to select an area to get screenshot, then release it when ready. Then double click the left mouse button.
 
 4. The selected screen will appear in the picture box of the application.
-![image](https://user-images.githubusercontent.com/109420709/183228744-ac3365f0-a0f2-4dbe-921a-0029a83a56bc.png)
+![image](https://user-images.githubusercontent.com/109420709/183229082-acfcb87d-2486-4fd3-bf6e-f3d7d065386d.png)
 
 5. Click "Convert to Text" button, the text will be showed in the text box few seconds later.
 
