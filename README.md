@@ -19,5 +19,5 @@ Windows Form Application.
 ![image](https://user-images.githubusercontent.com/109420709/183228783-e18179ed-efa1-45d7-9347-3fe1edc8c071.png)
 
 6. Simplified Chinese supported.
-![image](https://user-images.githubusercontent.com/109420709/183228862-a69ea702-0324-464f-8034-8ced6d1f400d.png)
+![image](https://user-images.githubusercontent.com/109420709/183228890-1645e044-0dab-4c4d-b636-e68bdb325c36.png)
 
