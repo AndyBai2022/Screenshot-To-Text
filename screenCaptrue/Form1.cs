@@ -1,4 +1,4 @@
-﻿using IronOcr;
+using IronOcr;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -57,7 +57,7 @@ namespace screenCaptrue
             }
             catch(Exception te)
             {
-                //MessageBox.Show("Alt + A 热键被占用");
+                MessageBox.Show(te.Message);
             }
         }
 
@@ -69,21 +69,27 @@ namespace screenCaptrue
 
         private async void button2_Click(object sender, EventArgs e)
         {
+            
             //richTextBox1.Text = await ConvertTxtAsync().Text; //X
 
             progressBar1.Value = 0;
             var progress = new Progress<int>(percent =>
             {
                 progressBar1.Value = percent;
-                
-
             });
 
 
             //OcrResult ocrResult = await ConvertTxtAsync(progress);
-            OcrResult ocrResult = await Task.Run(()=>ConvertTxtAsync(progress));
-            //progressBar1.Value = 1000;
-            richTextBox1.Text = ocrResult.Text;
+            try { 
+                 OcrResult ocrResult = await Task.Run(()=>ConvertTxtAsync(progress));
+                richTextBox1.Text = ocrResult.Text;
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message);
+            }
+                //progressBar1.Value = 1000;
+            ;
 
         }
 
@@ -106,7 +112,7 @@ namespace screenCaptrue
 
 
             var Ocr = new IronTesseract();
-            Ocr.Language = OcrLanguage.ChineseSimplifiedBest;
+            //Ocr.Language = OcrLanguage.ChineseSimplifiedBest;
             using (var Input = new OcrInput())
             {
                 Input.AddImage(pictureBox1.Image);
