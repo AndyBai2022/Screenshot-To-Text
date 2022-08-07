@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
  
@@ -56,7 +57,7 @@ namespace screenCaptrue
             }
             catch(Exception te)
             {
-                MessageBox.Show("Alt + A 热键被占用");
+                //MessageBox.Show("Alt + A 热键被占用");
             }
         }
 
@@ -66,22 +67,74 @@ namespace screenCaptrue
             Hotkey.UnRegist(this.Handle, ScreenCapture);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
-            //将picturebox中的图片转成文字
-            if (pictureBox1.Image == null) { 
+            //richTextBox1.Text = await ConvertTxtAsync().Text; //X
+
+            progressBar1.Value = 0;
+            var progress = new Progress<int>(percent =>
+            {
+                progressBar1.Value = percent;
+                
+
+            });
+
+
+            //OcrResult ocrResult = await ConvertTxtAsync(progress);
+            OcrResult ocrResult = await Task.Run(()=>ConvertTxtAsync(progress));
+            //progressBar1.Value = 1000;
+            richTextBox1.Text = ocrResult.Text;
+
+        }
+
+        //private async Task<OcrResult> ConvertTxtAsync()
+        private async Task<OcrResult> ConvertTxtAsync(IProgress<int> progress)
+        {
+            if (pictureBox1.Image == null)
+            {
                 MessageBox.Show("Please take screenshot first!");
-                return;
+                return null;
             }
+            //draw progress bar
+            for (int i = 1; i <= 100; i++)
+            {
+                Thread.Sleep(100);
+                if (progress != null)
+                    progress.Report(i);
+            }
+
+
 
             var Ocr = new IronTesseract();
             Ocr.Language = OcrLanguage.ChineseSimplifiedBest;
             using (var Input = new OcrInput())
             {
                 Input.AddImage(pictureBox1.Image);
-                 richTextBox1.Text = Ocr.Read(Input).Text;
-                
-            }
+
+                OcrResult convertedText =  await Ocr.ReadAsync(Input);
+                return convertedText;
+
+              }
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            //there should be no GUI component method
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            //this is updated from doWwork.Its where GUI components are updated
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {//called when the heavy operation in bg is over.Can also acCept GUI components
+
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 
