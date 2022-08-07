@@ -73,23 +73,28 @@ namespace screenCaptrue
             //richTextBox1.Text = await ConvertTxtAsync().Text; //X
 
             progressBar1.Value = 0;
-            var progress = new Progress<int>(percent =>
-            {
-                progressBar1.Value = percent;
-            });
+            
 
 
             //OcrResult ocrResult = await ConvertTxtAsync(progress);
-            try { 
-                 OcrResult ocrResult = await Task.Run(()=>ConvertTxtAsync(progress));
+            try {
+
+
+                var progress = new Progress<int>(percent =>
+                {
+                    progressBar1.Value = percent;
+ 
+                });
+
+
+                OcrResult ocrResult = await Task.Run(()=>ConvertTxtAsync(progress));
                 richTextBox1.Text = ocrResult.Text;
             }
             catch (Exception ee)
             {
                 MessageBox.Show(ee.Message);
             }
-                //progressBar1.Value = 1000;
-            ;
+                //progressBar1.Value = 1000;       
 
         }
 
@@ -104,7 +109,7 @@ namespace screenCaptrue
             //draw progress bar
             for (int i = 1; i <= 100; i++)
             {
-                Thread.Sleep(100);
+                //Thread.Sleep(100);
                 if (progress != null)
                     progress.Report(i);
             }
@@ -123,25 +128,8 @@ namespace screenCaptrue
               }
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //there should be no GUI component method
-        }
 
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            //this is updated from doWwork.Its where GUI components are updated
-        }
-
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {//called when the heavy operation in bg is over.Can also acCept GUI components
-
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+      
     }
 
     public class DLL
